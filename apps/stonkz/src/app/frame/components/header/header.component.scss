@@ -1,0 +1,33 @@
+.header {
+  background: lightblue;
+  height: 90px;
+  width: 100%;
+  box-shadow: 0 1px 3px black;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.icon {
+  margin: 10px;
+  border-radius: 50%;
+  height: 65px;
+  width: 65px;
+  background: white;
+  box-shadow: 1px 1px 3px black;
+  // border: 5px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.icon:hover {
+  background-color: whitesmoke;
+}
+
+.text {
+  font-family: 'LucyTheCat', Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  margin-left: 10px;
+}

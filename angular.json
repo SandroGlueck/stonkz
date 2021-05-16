@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "stonkz",
+  "projects": {
+    "stonkz": {
+      "projectType": "application",
+      "root": "apps/stonkz",
+      "sourceRoot": "apps/stonkz/src",
+      "prefix": "stonkz",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/stonkz",
+            "index": "apps/stonkz/src/index.html",
+            "main": "apps/stonkz/src/main.ts",
+            "polyfills": "apps/stonkz/src/polyfills.ts",
+            "tsConfig": "apps/stonkz/tsconfig.app.json",
+            "aot": true,
+            "assets": ["apps/stonkz/src/favicon.ico", "apps/stonkz/src/assets"],
+            "styles": ["apps/stonkz/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/stonkz/src/environments/environment.ts",
+                  "with": "apps/stonkz/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "stonkz:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "stonkz:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "stonkz:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/stonkz/src/**/*.ts",
+              "apps/stonkz/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/stonkz"],
+          "options": {
+            "jestConfig": "apps/stonkz/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "stonkz-e2e": {
+      "root": "apps/stonkz-e2e",
+      "sourceRoot": "apps/stonkz-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/stonkz-e2e/cypress.json",
+            "tsConfig": "apps/stonkz-e2e/tsconfig.e2e.json",
+            "devServerTarget": "stonkz:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "stonkz:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/stonkz-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
